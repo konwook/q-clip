@@ -4,10 +4,9 @@ Test out [CLIP](https://openai.com/blog/clip) from OpenAI on various datasets li
 
 ## Examples
 
-!["Searching ImageNetV2 for an abandoned town"](examples/town)
-!["Searching Coco for a grey cat"](examples/grey_cat)
-!["Searching Coco for an America-colored cake"](examples/america_cake)
-!["Searching DeepDrive for a truck on a highway"](examples/truck)
+![Searching ImageNetV2 for an abandoned town](examples/town.png)
+![Searching Coco for a grey cat](examples/grey_cat.png)
+![Searching DeepDrive for a truck on a highway](examples/truck.png)
 
 ## Usage
 
