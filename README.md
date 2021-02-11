@@ -22,3 +22,7 @@ Run the Streamlit app
 ```
 streamlit run clip_app.py
 ```
+
+## Adding New Datasets
+
+The Jupyter notebooks in `notebooks` show how new datasets can be processed. 
