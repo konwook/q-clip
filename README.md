@@ -6,17 +6,19 @@ Test out [CLIP](https://openai.com/blog/clip) from OpenAI on various datasets li
 
 ## Usage
 
-1. Install the dependencies from `requirements.txt`
+Install the dependencies from `requirements.txt`
 
 ```
 pip install -r requirements.txt 
 ```
 
-2. To use [ImageNetv2](https://imagenetv2.org/), download the matched-frequency dataset to the `imagenetv2` directory. 
+To query [ImageNetv2](https://imagenetv2.org/), download the matched-frequency dataset to the `imagenetv2` directory. 
 
-3. To use [DeepDrive](https://bdd-data.berkeley.edu/), download the Images dataset to the `bdd` directory. 
+To query [Coco](https://cocodataset.org/), download the [features](https://cmu.app.box.com/s/t6fbkyfb7j28yhts9zg8ugbwo57aotos) to the `coco` directory.
 
-4. Run the Streamlit app
+To query [DeepDrive](https://bdd-data.berkeley.edu/), download the Images dataset and the [features](https://cmu.box.com/s/m39dgck0ie1ebuq7hozpy64m67t15udb) to the `bdd` directory. 
+
+Run the Streamlit app
 
 ```
 streamlit run clip_app.py
