@@ -1,3 +1,7 @@
+# data
+bdd/images/*
+imagenetv2/imagenetv2-matched-frequency-format-val/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
