@@ -27,16 +27,16 @@ def main():
 
     # standardize directory/file names...
     if dataset == "ImageNetV2":
-        image_features = torch.load("../imagenetv2/imagenetv2_matched_freq_features.pt")
-        with open("../imagenetv2/imagenetv2_matched_freq_filenames.txt", "rb") as f:
+        image_features = torch.load("./imagenetv2/imagenetv2_matched_freq_features.pt")
+        with open("./imagenetv2/imagenetv2_matched_freq_filenames.txt", "rb") as f:
             fnames = pickle.load(f)
     elif dataset == "Coco":
-        image_features = torch.load("../coco/coco_features.pt")
-        with open("../coco/coco_filenames.txt", "rb") as f:
+        image_features = torch.load("./coco/coco_features.pt")
+        with open("./coco/coco_filenames.txt", "rb") as f:
             fnames = pickle.load(f)
     elif dataset == "DeepDrive":
-        image_features = torch.load("../bdd/bdd_features.pt")
-        with open("../bdd/bdd_filenames.txt", "rb") as f:
+        image_features = torch.load("./bdd/bdd_features.pt")
+        with open("./bdd/bdd_filenames.txt", "rb") as f:
             fnames = pickle.load(f)
 
     run_app(dataset, image_features, fnames, model, transform, top_k)
@@ -59,52 +59,51 @@ def run_app(dataset, image_features, fnames, model, transform, top_k=10, device=
     values, images, inds = im_vals.numpy()[:, None].T, [], []
     for i in im_inds:
         if dataset == "ImageNetV2":
-            f = "../imagenetv2/imagenetv2-matched-frequency-format-val/" + "/".join(fnames[i].split('/')[1:])
+            f = "./imagenetv2/imagenetv2-matched-frequency-format-val/" + "/".join(fnames[i].split('/')[1:])
             inds.append(int((f.split('/'))[3]))
         elif dataset == "Coco":
             f = "http://images.cocodataset.org/train2014/" + fnames[i].split('/')[2]
             inds.append(i)
         elif dataset == "DeepDrive":
-            f = '../bdd/' + '/'.join(fnames[i].split('/')[2:])
+            f = './bdd/' + '/'.join(fnames[i].split('/')[2:])
             inds.append(i)
         images.append(io.imread(f))
 
     fig = px.histogram(sim.cpu().numpy(), title='Similarity Distribution')
     st.plotly_chart(fig, use_container_width=True)
     st.write('Most Similar to Least Similar')
-    plot_pics(images, values)
+    plot_pics(images, values, top_k)
     # plot_plt(dataset, values, images, inds)
     plot_pca(image_features[im_inds])
 
-def plot_pics(images, values):
+def plot_pics(images, values, top_k):
     values = values.flatten()
     images = [cv2.resize(im, (360, 360)) for im in images]
 
     c1, c2, c3, c4, c5 = st.beta_columns(5)
     with c1:
         st.image(images[0], caption=f"Similarity score: {values[0]}")
-        st.image(images[5], caption=f"Similarity score: {values[5]}")
+        if top_k > 5: st.image(images[5], caption=f"Similarity score: {values[5]}")
     with c2:
-        st.image(images[1], caption=f"Similarity score: {values[1]}")
-        st.image(images[6], caption=f"Similarity score: {values[6]}")
+        if top_k > 1: st.image(images[1], caption=f"Similarity score: {values[1]}")
+        if top_k > 6: st.image(images[6], caption=f"Similarity score: {values[6]}")
     with c3:
-        st.image(images[2], caption=f"Similarity score: {values[2]}")
-        st.image(images[7], caption=f"Similarity score: {values[7]}")
+        if top_k > 2: st.image(images[2], caption=f"Similarity score: {values[2]}")
+        if top_k > 7: st.image(images[7], caption=f"Similarity score: {values[7]}")
     with c4:
-        st.image(images[3], caption=f"Similarity score: {values[3]}")
-        st.image(images[8], caption=f"Similarity score: {values[8]}")
+        if top_k > 3: st.image(images[3], caption=f"Similarity score: {values[3]}")
+        if top_k > 8: st.image(images[8], caption=f"Similarity score: {values[8]}")
     with c5:
-        st.image(images[4], caption=f"Similarity score: {values[4]}")
-        st.image(images[9], caption=f"Similarity score: {values[9]}")
+        if top_k > 4: st.image(images[4], caption=f"Similarity score: {values[4]}")
+        if top_k > 9: st.image(images[9], caption=f"Similarity score: {values[9]}")
 
 def plot_plt(dataset, values, images, inds):
 
-    # imagenet specific
     if dataset == "ImageNetV2":
-        with open("../imagenetv2/imagenetv2_matched_freq_classes.txt", "rb") as f:
+        with open("./imagenetv2/imagenetv2_matched_freq_classes.txt", "rb") as f:
             classes = pickle.load(f)
     elif dataset == "Coco":
-        with open("../coco/coco_all_captions.txt", "rb") as f:
+        with open("./coco/coco_all_captions.txt", "rb") as f:
             classes = pickle.load(f)
         classes = [descrip[0] for descrip in classes]
 
